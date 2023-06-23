@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>GoldCraft</title>
+
+        <!-- boxicon FrameWork -->
+        <link
+            href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+            rel="stylesheet"
+        />
+
+        <!-- html2pdf FrameWork -->
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+            integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script>
+            // PDF
+            function addScript(url) {
+                var script = document.createElement("script");
+                script.type = "application/javascript";
+                script.src = url;
+                document.head.appendChild(script);
+            }
+            addScript(
+                "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+            );
+        </script>
+
+        <!-- Project CSS -->
+        <link rel="stylesheet" href="./css/app.css" />
+
+        <!-- Project JS -->
+        <script defer src="./js/Object.js"></script>
+        <script defer src="./js/app.js"></script>
+    </head>
+    <body>
+        <!-- Alert -->
+        <div class="toast" id="divAlert">
+            <div class="toast-content">
+                <i class="fas fa-solid fa-check check">!</i>
+
+                <div class="message">
+                    <span class="text text-1" style="color: #000">ايرور</span>
+                    <span class="text text-2" id="warnText"
+                        >Your changes has been saved</span
+                    >
+                </div>
+            </div>
+            <i class="fa-solid fa-xmark close"></i>
+
+            <!-- Remove 'active' class, this is just to show in Codepen thumbnail -->
+            <div class="progress active"></div>
+        </div>
+
+        <div style="display: none">
+            <table
+                style="width: 90%; font-size: 0.8rem; margin: auto"
+                id="table"
+            >
+                <tbody id="tbody"></tbody>
+            </table>
+        </div>
+
+        <!-- ################################################################ -->
+
+        <header>
+            <div>
+                <div id="btnHome" data-id="home">الرئيسية</div>
+                <i
+                    style="transform: translateY(8px); font-size: 2rem"
+                    class="bx bx-chevron-left"
+                ></i>
+                <span id="pageName"></span>
+            </div>
+        </header>
+
+        <div class="crud" id="main">
+            <!----------[ Home ]---------->
+            <section id="home" class="open">
+                <div class="head">
+                    <h1>العملاء</h1>
+                </div>
+
+                <div class="body">
+                    <div
+                        style="position: sticky; width: 40%; background: none"
+                    ></div>
+
+                    <div class="inputs">
+                        <h1>اضافة عميل جديد</h1>
+                        <input
+                            class="inpt"
+                            id="inputChangeName"
+                            type="text"
+                            placeholder="اسم العميل..."
+                        />
+                        <div>
+                            <button
+                                class="btn"
+                                data-user=""
+                                id="addUser"
+                                type=""
+                            >
+                                اضافة
+                                <i class="bx bx-plus-medical"></i>
+                            </button>
+
+                            <button
+                                class="pdf btn"
+                                style="height: 3rem"
+                                onclick="pdf()"
+                            >
+                                تحميل ملف PDF للعملاء
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="outputs">
+                        <div class="search">
+                            <h1>قائمة العملاء</h1>
+                            <div>
+                                <input
+                                    class="inpt"
+                                    type="text"
+                                    placeholder="ادخل اسم العميل..."
+                                    id="searchUsersInput"
+                                    onkeyup="home.searchUsers(this.value)"
+                                />
+                                <button
+                                    class="btn"
+                                    onclick="home.searchUsers(searchUsersInput.value)"
+                                    id="searchUsersButton"
+                                >
+                                    ابحث
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="nav">
+                            <span>الاسم</span>
+                            <span>الذهب</span>
+                            <span>الاجور</span>
+                        </div>
+                        <!-- mainHome -->
+                        <main id="mainHome"></main>
+                    </div>
+                    <!-- userShow -->
+                    <div id="userShow" class="btns">
+                        <h3><span id="userSelName"></span></h3>
+                        <button class="btn" data-id="invoices" id="btnInvoices">
+                            اظهار الفواتير
+                            <i class="bx bx-notepad"></i>
+                        </button>
+                        <button class="btn" data-id="bonds" id="btnBonds">
+                            اظهار السندات
+                            <i class="bx bxs-food-menu"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!--------[ Invoices ]-------->
+            <section id="invoices">
+                <div class="head">
+                    <h1>الفواتير</h1>
+                </div>
+
+                <div class="body">
+                    <div
+                        style="position: sticky; width: 40%; background: none"
+                    ></div>
+
+                    <div class="inputs">
+                        <input
+                            class="inpt"
+                            type="number"
+                            id="inputInvoicesNum"
+                            placeholder="الرقم"
+                        />
+                        <input
+                            class="inpt"
+                            type="number"
+                            id="inputInvoicesGold"
+                            placeholder="الذهب"
+                        />
+                        <input
+                            class="inpt"
+                            type="number"
+                            id="inputInvoicesInvoic"
+                            placeholder="الاجر"
+                        />
+                        <input
+                            id="inputInvoicesCreated"
+                            type="date"
+                            placeholder="التاريخ"
+                        />
+                        <div>
+                            <button class="btn" id="addInvoices" type="">
+                                اضافة
+                                <i class="bx bx-notepad"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="outputs">
+                        <div class="search">
+                            <h1>قائمة الفواتير</h1>
+                            <div>
+                                <input
+                                    class="inpt"
+                                    type="number"
+                                    placeholder="ادخل رقم الفاتورة..."
+                                    id="searchInvoicesInput"
+                                    onkeyup="invoices.searchTables(this.value)"
+                                />
+                                <button
+                                    class="btn"
+                                    onclick="invoices.searchTables(searchInvoicesInput.value)"
+                                    id="searchInvoicesButton"
+                                >
+                                    ابحث
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="nav">
+                            <span>رقم</span>
+                            <span>الذهب</span>
+                            <span>الاجور</span>
+                            <span>التاريخ</span>
+                        </div>
+                        <!-- mainInvoices -->
+                        <main id="mainInvoices"></main>
+                    </div>
+                </div>
+            </section>
+
+            <!---------[ Bonds ]---------->
+            <section id="bonds">
+                <div class="head">
+                    <h1>السندات</h1>
+                </div>
+
+                <div class="body">
+                    <div
+                        style="position: sticky; width: 40%; background: none"
+                    ></div>
+
+                    <div class="inputs">
+                        <input
+                            class="inpt"
+                            type="number"
+                            id="inputBondsNum"
+                            placeholder="الرقم"
+                        />
+                        <input
+                            class="inpt"
+                            type="number"
+                            id="inputBondsGold"
+                            placeholder="الذهب"
+                        />
+                        <input
+                            class="inpt"
+                            type="number"
+                            id="inputBondsInvoic"
+                            placeholder="الاجر"
+                        />
+                        <input
+                            id="inputBondsCreated"
+                            type="date"
+                            placeholder="التاريخ"
+                        />
+                        <div>
+                            <button class="btn" id="addBonds" type="">
+                                اضافة
+                                <i class="bx bx-notepad"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="outputs">
+                        <div class="search">
+                            <h1>قائمة السندات</h1>
+                            <div>
+                                <input
+                                    class="inpt"
+                                    type="number"
+                                    placeholder="ادخل رقم السند..."
+                                    id="searchBondsInput"
+                                    onkeyup="bonds.searchTables(this.value)"
+                                />
+                                <button
+                                    class="btn"
+                                    onclick="bonds.searchTables(searchBondsInput.value)"
+                                    id="searchBondsButton"
+                                >
+                                    ابحث
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="nav">
+                            <span>رقم</span>
+                            <span>الذهب</span>
+                            <span>الاجور</span>
+                            <span>التاريخ</span>
+                        </div>
+                        <!-- mainBonds -->
+                        <main id="mainBonds"></main>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ################################################################ -->
+    </body>
+</html>
