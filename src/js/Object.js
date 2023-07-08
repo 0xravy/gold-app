@@ -124,8 +124,8 @@ class Lala {
                 table += `
                     <div data-id="${i}" onclick="home.userSelect(${i})">
                         <span>${dataPro[i].name || "test"}</span>
-                        <span>${dataPro[i].gold}</span>
-                        <span>${dataPro[i].mony}</span>
+                        <span>${Number((dataPro[i].gold).toFixed(3))}</span>
+                        <span>${Number((dataPro[i].mony).toFixed(3))}</span>
                         <button data-id="${i}" onclick="home.userDelete(${i})" class="removeButton">
                             <i class='bx bx-trash'></i>
                         </button>
@@ -201,8 +201,8 @@ class Lala {
             table += `
             <div data-id="${i}" onclick="home.userSelect(${i})">
                 <span>${dataPro[i].name}</span>
-                <span>${dataPro[i].gold}</span>
-                <span>${dataPro[i].mony}</span>
+                <span>${Number((dataPro[i].gold).toFixed(3))}</span>
+                <span>${Number((dataPro[i].mony).toFixed(3))}</span>
                 <button data-id="${i}" onclick="home.userDelete(${i})" class="removeButton">
                     <i class='bx bx-trash'></i>
                 </button>
