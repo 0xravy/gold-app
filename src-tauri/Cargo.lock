@@ -1016,6 +1016,7 @@ dependencies = [
 name = "gold_rs"
 version = "0.0.0"
 dependencies = [
+ "javascriptcore-rs-sys",
  "serde",
  "serde_json",
  "tauri",
