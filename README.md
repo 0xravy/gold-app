@@ -1,4 +1,4 @@
-[[ Demo ]](https://0xravy.github.io/gold_rs/src/)  website of app
+[[ Demo ]](https://0xravy.github.io/gold-app/src/index.html))  website of app
 
 <img src="./LALA/home.png">
 <img src="./LALA/pages.png">
